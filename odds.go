@@ -28,11 +28,11 @@ func (a American) Probability() *big.Float {
 	var stake, payout *big.Float
 
 	if i := float64(a); i < 0 {
-		stake = big.NewFloat(float64(-i))
-		payout = big.NewFloat(float64(-i + 100))
+		stake = big.NewFloat(-i)
+		payout = big.NewFloat(-i + 100)
 	} else {
-		stake = big.NewFloat(float64(100))
-		payout = big.NewFloat(float64(i + 100))
+		stake = big.NewFloat(100)
+		payout = big.NewFloat(i + 100)
 	}
 
 	return stake.Quo(stake, payout)
@@ -58,7 +58,8 @@ func Probability(o Odds) *big.Float {
 
 // Vig returns the vigorish (aka juice) between two odds.
 func Vig(o1, o2 Odds) *big.Float {
-	p := new(big.Float).Add(o1.Probability(), o2.Probability())
-	p.Add(p, big.NewFloat(float64(-1)))
+	p := o1.Probability()
+	p.Add(p, o2.Probability())
+	p.Add(p, big.NewFloat(-1))
 	return p
 }
