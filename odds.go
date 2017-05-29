@@ -55,3 +55,10 @@ func (f Fractional) Probability() *big.Float {
 func Probability(o Odds) *big.Float {
 	return o.Probability()
 }
+
+// Vig returns the vigorish (aka juice) between two odds.
+func Vig(o1, o2 Odds) *big.Float {
+	p := new(big.Float).Add(o1.Probability(), o2.Probability())
+	p.Add(p, big.NewFloat(float64(-1)))
+	return p
+}

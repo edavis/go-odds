@@ -52,3 +52,19 @@ func TestProbability(t *testing.T) {
 		assert.Equal(t, test.prob, p.Text('g', prec))
 	}
 }
+
+func TestVig(t *testing.T) {
+	tests := []struct {
+		o1  Odds
+		o2  Odds
+		vig string
+	}{
+		{American(-750), American(+604), "0.0244"},
+		{American(-415), American(+365), "0.02088"},
+	}
+
+	for _, test := range tests {
+		v := Vig(test.o1, test.o2)
+		assert.Equal(t, test.vig, v.Text('g', prec))
+	}
+}
