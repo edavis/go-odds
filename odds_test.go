@@ -69,3 +69,20 @@ func TestVig(t *testing.T) {
 		assert.Equal(t, test.vig, v.Text('g', prec))
 	}
 }
+
+func TestFairOdds(t *testing.T) {
+	tests := []struct {
+		o1 Odds
+		o2 Odds
+		n1 string
+		n2 string
+	}{
+		{American(-750), American(+604), "0.8613", "0.1387"},
+	}
+
+	for _, test := range tests {
+		n1, n2 := FairOdds(test.o1, test.o2)
+		assert.Equal(t, test.n1, n1.Text('g', prec))
+		assert.Equal(t, test.n2, n2.Text('g', prec))
+	}
+}

@@ -63,3 +63,14 @@ func Vig(o1, o2 Odds) *big.Float {
 	p.Add(p, big.NewFloat(-1))
 	return p
 }
+
+// FairOdds returns what the odds would be without the vig.
+func FairOdds(o1, o2 Odds) (*big.Float, *big.Float) {
+	v := Vig(o1, o2)
+	v.Add(v, big.NewFloat(1))
+
+	p1 := o1.Probability()
+	p2 := o2.Probability()
+
+	return p1.Quo(p1, v), p2.Quo(p2, v)
+}
