@@ -61,6 +61,7 @@ func TestVig(t *testing.T) {
 	}{
 		{American(-750), American(+604), "0.0244"},
 		{American(-415), American(+365), "0.02088"},
+		{American(-150), Decimal(2.30), "0.03478"},
 	}
 
 	for _, test := range tests {
