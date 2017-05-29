@@ -5,12 +5,27 @@ import (
 )
 
 // Decimal odds represent the amount won (profit + stake) for every $1 staked.
-type Decimal float64
+type Decimal struct {
+	prob *big.Float
+}
 
-// Probability returns the implied probability of the odds.
+// NewDecimal takes an input string like "1.9090" or "2.4" and returns
+// a new Decimal object.
+func NewDecimal(s string) *Decimal {
+	f := new(big.Float)
+	f, _, err := f.Parse(s, 10)
+	if err != nil {
+		return nil
+	}
+	return &Decimal{
+		prob: f.Quo(big.NewFloat(1), f),
+	}
+}
+
 func (d Decimal) Probability() *big.Float {
-	stake := big.NewFloat(1.0)
-	odds := big.NewFloat(float64(d))
-	stake.Quo(stake, odds)
-	return stake
+	return d.prob
+}
+
+func (d *Decimal) RemoveVig(v *big.Float) {
+	d.prob.Quo(d.prob, v)
 }
