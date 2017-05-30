@@ -22,7 +22,7 @@ func NewDecimal(s string) *Decimal {
 	}
 }
 
-func (d Decimal) Probability() *big.Float {
+func (d *Decimal) Probability() *big.Float {
 	return d.prob
 }
 

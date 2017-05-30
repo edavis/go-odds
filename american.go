@@ -39,11 +39,6 @@ func NewAmerican(s string) *American {
 	}
 }
 
-// NewAmericanFromProb takes a *big.Float and returns a new American object.
-func NewAmericanFromProb(p *big.Float) *American {
-	return &American{prob: p}
-}
-
 func (a *American) Probability() *big.Float {
 	return a.prob
 }

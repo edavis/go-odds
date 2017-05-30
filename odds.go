@@ -8,9 +8,11 @@ import (
 // Odds is an interface that each odds format implements. It exists so
 // functions can take any of the available odds formats.
 type Odds interface {
+	// Return the underlying implied probability of the odds.
 	Probability() *big.Float
-	RemoveVig(*big.Float)
-	// String() string
+
+	// Remove the vig from the underlying implied probability.
+	RemoveVig(vig *big.Float)
 }
 
 // Probability returns the implied probability of the given odds.
@@ -26,7 +28,7 @@ func Vig(o1, o2 Odds) *big.Float {
 	return p
 }
 
-// FairOdds returns what the odds would be without the vig.
+// FairOdds modifies the given odds (in-place) to remove the vig.
 func FairOdds(o1, o2 Odds) {
 	v := Vig(o1, o2)
 	v.Add(v, big.NewFloat(1))

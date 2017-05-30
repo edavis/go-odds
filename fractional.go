@@ -40,7 +40,7 @@ func NewFractional(s string) *Fractional {
 	}
 }
 
-func (f Fractional) Probability() *big.Float {
+func (f *Fractional) Probability() *big.Float {
 	return f.prob
 }
 
